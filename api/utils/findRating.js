@@ -18,8 +18,6 @@ module.exports = async (professor) => {
             return { err: true }
         }
 
-        console.log(data.response.docs)
-
         return { rating: data.response.docs[0].averageratingscore_rf }
     } catch(err) {
         console.error(err);
