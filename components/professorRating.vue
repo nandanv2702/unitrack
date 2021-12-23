@@ -1,5 +1,6 @@
 <template>
-  <c-box
+  <c-pseudo-box
+    as="button"
     rounded="md"
     border="1px"
     outline="gray.400"
@@ -7,6 +8,7 @@
     shadow="md"
     p="3"
     m="3"
+    @click="$emit('open')"
   >
     <c-heading size="md" is-truncated text-align="center">Professor Name</c-heading>
     <c-simple-grid :columns="2" :spacing="8" pt="3" text-align="center">
@@ -20,7 +22,7 @@
       </c-stat>
     </c-simple-grid>
     <c-progress my="2" rounded="md" color="vue" :value="Math.round(Math.random() * 100)" />
-  </c-box>
+  </c-pseudo-box>
 </template>
 
 <script>

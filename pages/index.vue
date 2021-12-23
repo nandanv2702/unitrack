@@ -17,7 +17,7 @@
         <c-flex justify="center" direction="column" align="center" mx="4">
           <c-flex as="form">
             <c-box mr="3" rounded="md">
-              <c-select v-model="burgerType" placeholder="Select Semester">
+              <c-select v-model="semesterCode" placeholder="Select Semester">
                 <option value="grilled">Grilled Backyard Burger</option>
                 <option value="pub-style">The Pub-Style Burger</option>
                 <option value="jucy-lucy">The Jucy Lucy</option>
@@ -57,13 +57,14 @@
       <c-divider m="8"></c-divider>
 
       <c-box justify-content="bottom" mx="12" my="4">
+        <modal :is-open="isOpen" @close="close" />
         <c-simple-grid min-child-width="240px" spacing="20px">
-          <professor-rating />
-          <professor-rating />
-          <professor-rating />
-          <professor-rating />
-          <professor-rating />
-          <professor-rating />
+          <professor-rating @open="open" />
+          <professor-rating @open="open" />
+          <professor-rating @open="open" />
+          <professor-rating @open="open" />
+          <professor-rating @open="open" />
+          <professor-rating @open="open" />
         </c-simple-grid>
       </c-box>
     </CBox>
@@ -84,7 +85,7 @@ export default {
   inject: ['$chakraColorMode', '$toggleColorMode'],
   data() {
     return {
-      showModal: false,
+      semesterCode: undefined,
       mainStyles: {
         dark: {
           bg: 'gray.700',
@@ -95,6 +96,7 @@ export default {
           color: 'gray.900',
         },
       },
+      isOpen: false,
     }
   },
   computed: {
@@ -117,6 +119,12 @@ export default {
         duration: 10000,
         isClosable: true,
       })
+    },
+    open() {
+      this.isOpen = true
+    },
+    close() {
+      this.isOpen = false
     },
   },
 }
