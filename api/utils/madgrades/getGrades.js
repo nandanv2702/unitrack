@@ -1,4 +1,5 @@
 import axios from 'axios'
+const MADGRADES_TOKEN = process.env.MADGRADES_TOKEN
 
 function getGPACount({ aCount, abCount, bCount, bcCount, cCount, dCount, fCount }) {
     return aCount + abCount + bCount + bcCount + cCount + dCount + fCount
@@ -6,6 +7,10 @@ function getGPACount({ aCount, abCount, bCount, bcCount, cCount, dCount, fCount 
 
 function calculateGPA({ aCount, abCount, bCount, bcCount, cCount, dCount, fCount }) {
     const total = getGPACount({ aCount, abCount, bCount, bcCount, cCount, dCount, fCount })
+
+    if(total === 0) {
+        return 0.00
+    }
 
     const gpa = (4*aCount + 3.5*abCount + 3*bCount + 2.5*bcCount + 2*cCount + 1*dCount) / total
     return gpa.toFixed(2)
@@ -16,7 +21,7 @@ function getGPAStatistics(course){
     const cumulativeGPA = calculateGPA(course.cumulative)
     
     course.sections.forEach((section) => {
-        // calculate gpa
+        // calculate section gpa
         const sectionGPA = calculateGPA(section)
 
         section.instructors.forEach((instructor) => {
@@ -34,7 +39,7 @@ function getGPAStatistics(course){
         })
     })
     
-    return [course.termCode, cumulativeGPA, gpaMap]
+    return { semesterCode: course.termCode, cumulativeGPA, gpaMap }
 }
 
 module.exports = async (gradesUrl) => {
@@ -43,7 +48,7 @@ module.exports = async (gradesUrl) => {
         method: 'GET',
         url: `${gradesUrl}`,
         headers: {
-            'Authorization': 'Token token=ff93107f38e14bc8af16d38b435fcf30',
+            'Authorization': `Token token=${MADGRADES_TOKEN}`,
         },
         mode: 'cors',
         credentials: 'same-origin',

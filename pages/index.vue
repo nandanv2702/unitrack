@@ -16,14 +16,14 @@
 
         <c-flex justify="center" direction="column" align="center" mx="4">
           <c-flex as="form">
-            <c-box mr="3" rounded="md">
+            <c-box mr="3" rounded="md" w="28">
               <c-select v-model="semesterCode" placeholder="Select Semester">
-                <option value="grilled">Grilled Backyard Burger</option>
-                <option value="pub-style">The Pub-Style Burger</option>
-                <option value="jucy-lucy">The Jucy Lucy</option>
+                <option value="1224">Spring 2022</option>
+                <option value="1222">Fall 2021</option>
               </c-select>
             </c-box>
-            <c-pseudo-box
+            <c-input
+              v-model="courseName"
               as="input"
               placeholder="Course, e.g., Econ 101"
               type="text"
@@ -46,7 +46,7 @@
               rounded="md"
               font-weight="semibold"
               variant-color="blue"
-              @click.prevent="showToast"
+              @click.prevent="getData"
             >
               Search
             </CButton>
@@ -58,13 +58,8 @@
 
       <c-box justify-content="bottom" mx="12" my="4">
         <modal :is-open="isOpen" @close="close" />
-        <c-simple-grid min-child-width="240px" spacing="20px">
-          <professor-rating @open="open" />
-          <professor-rating @open="open" />
-          <professor-rating @open="open" />
-          <professor-rating @open="open" />
-          <professor-rating @open="open" />
-          <professor-rating @open="open" />
+        <c-simple-grid min-child-width="240px" spacing="20px" >
+          <professor-rating v-for="professor in professors" :key="professor.prof" :prof="professor" @open="open" />
         </c-simple-grid>
       </c-box>
     </CBox>
@@ -86,6 +81,9 @@ export default {
   data() {
     return {
       semesterCode: undefined,
+      courseName: '',
+      professors: [],
+      grades: [],
       mainStyles: {
         dark: {
           bg: 'gray.700',
@@ -126,6 +124,12 @@ export default {
     close() {
       this.isOpen = false
     },
+    async getData() {
+      const { data: results } = await this.$axios(`/api/stats?course=${this.courseName}&semesterCode=${this.semesterCode}`)
+      
+      this.professors = results.professors
+      this.grades = results.grades
+    }
   },
 }
 </script>
