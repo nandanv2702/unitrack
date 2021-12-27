@@ -3,12 +3,12 @@
     as="button"
     rounded="md"
     border="1px"
-    outline="gray.400"
+    outline="green"
     max-width="64"
     shadow="md"
     p="3"
     m="3"
-    @click="$emit('open')"
+    @click="$emit('open', prof.prof)"
   >
     <c-heading size="md" is-truncated text-align="center">{{ prof.prof }}</c-heading>
     <c-simple-grid :columns="2" :spacing="8" pt="3" text-align="center">
