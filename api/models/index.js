@@ -2,6 +2,7 @@
 const mongoose = require('mongoose');
 const MGCourseSchema = require('./MGCourse')
 const RatingSchema = require('./Rating')
+const GradesSchema = require('./Grades')
 
 // Set up default mongoose connection
 const mongoDB = process.env.NODE_ENV === 'production'
@@ -19,6 +20,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 const MGCourse = mongoose.model('MGCourse', MGCourseSchema)
 const Rating = mongoose.model('Rating', RatingSchema)
+const Grades = mongoose.model('Grades', GradesSchema)
 
-module.exports = { MGCourse, Rating }
+module.exports = { MGCourse, Rating, Grades }
 

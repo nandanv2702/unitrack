@@ -57,9 +57,14 @@
       <c-divider m="8"></c-divider>
 
       <c-box justify-content="bottom" mx="12" my="4">
-        <modal :is-open="isOpen" @close="close" />
-        <c-simple-grid min-child-width="240px" spacing="20px" >
-          <professor-rating v-for="professor in professors" :key="professor.prof" :prof="professor" @open="open" />
+        <modal :is-open="isOpen" :prof="activeProf" @close="close" />
+        <c-simple-grid min-child-width="240px" spacing="20px">
+          <professor-rating
+            v-for="professor in professors"
+            :key="professor.prof"
+            :prof="professor"
+            @open="open"
+          />
         </c-simple-grid>
       </c-box>
     </CBox>
@@ -83,6 +88,7 @@ export default {
       semesterCode: undefined,
       courseName: '',
       professors: [],
+      activeProf: {},
       grades: [],
       mainStyles: {
         dark: {
@@ -118,18 +124,32 @@ export default {
         isClosable: true,
       })
     },
-    open() {
+    open(name) {
+      this.activeProf = this.professors.find((prof) => prof.prof === name)
       this.isOpen = true
     },
     close() {
       this.isOpen = false
     },
     async getData() {
-      const { data: results } = await this.$axios(`/api/stats?course=${this.courseName}&semesterCode=${this.semesterCode}`)
-      
-      this.professors = results.professors
-      this.grades = results.grades
-    }
+      try {
+        const { data: results } = await this.$axios(
+          `/api/stats?course=${this.courseName}&semesterCode=${this.semesterCode}`
+        )
+
+        this.professors = results.professors
+        this.grades = results.grades
+      } catch (err) {
+        this.$toast({
+          title: 'Error',
+          description: "Error in Finding Course Info",
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+          position: 'top-right'
+        })
+      }
+    },
   },
 }
 </script>

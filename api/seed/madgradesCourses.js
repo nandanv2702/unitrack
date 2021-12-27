@@ -1,17 +1,13 @@
+/* eslint-disable no-console */
 const axios = require('axios')
+const pause = require('../utils/pause')
 
 const MADGRADES_API = process.env.MADGRADES_API || 'https://api.madgrades.com/v1'
 const MADGRADES_TOKEN = process.env.MADGRADES_TOKEN || 'ff93107f38e14bc8af16d38b435fcf30'
 
 const { MGCourse } = require('../models/index')
 
-function pause() {
-    return new Promise(resolve => setTimeout(() => {
-        resolve();
-    }, 300));
-}
-
-async function getCourses() {
+module.exports = async () => {
     try {
         const results = []
 
@@ -53,7 +49,7 @@ async function getCourses() {
 
             nextPageUrl = data.nextPageUrl
 
-            await pause()
+            await pause(300)
         }
 
         return results.length
@@ -64,6 +60,4 @@ async function getCourses() {
         return { err }
     }
 }
-
-console.log(getCourses())
 

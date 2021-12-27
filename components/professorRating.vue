@@ -36,6 +36,7 @@ export default {
   },
   computed: {
     averageGpa(){
+      if (!this.prof.grades) { return 0 }
       const semesterlyGrades = this.prof.grades
       .map((section) => {
         if (section.grades) {
