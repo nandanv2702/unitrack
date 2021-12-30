@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <CBox
+    <c-box
       v-bind="mainStyles[colorMode]"
       d="flex"
       w="100vw"
@@ -12,34 +12,27 @@
         <dark-mode-toggle />
       </c-box>
       <c-box mt="10" justify-content="top">
-        <CHeading text-align="center" mb="4"> ⚡️ UniTrack </CHeading>
+        <c-heading text-align="center" mb="4"> ⚡️ UniTrack </c-heading>
 
         <c-flex justify="center" direction="column" align="center" mx="4">
           <c-flex as="form">
-            <c-box mr="3" rounded="md" w="28">
-              <c-select v-model="semesterCode" placeholder="Select Semester">
-                <option value="1224">Spring 2022</option>
+            <c-box mr="3" rounded="md" w="48">
+              <c-select v-model="semesterCode">
+                <option value="1224" selected>Spring 2022</option>
                 <option value="1222">Fall 2021</option>
               </c-select>
             </c-box>
             <c-input
               v-model="courseName"
               as="input"
+              variant="filled"
               placeholder="Course, e.g., Econ 101"
               type="text"
               px="4"
               rounded="md"
-              bg="gray.100"
               border-width="1px"
-              :_hover="{ borderColor: 'gray.200', bg: 'gray.200' }"
-              :_focus="{
-                outline: 'none',
-                bg: 'white',
-                boxShadow: 'outline',
-                borderColor: 'gray.300',
-              }"
             />
-            <CButton
+            <c-button
               py="2"
               px="6"
               ml="3"
@@ -49,7 +42,7 @@
               @click.prevent="getData"
             >
               Search
-            </CButton>
+            </c-button>
           </c-flex>
         </c-flex>
       </c-box>
@@ -67,16 +60,16 @@
 
       <c-box justify-content="bottom" mx="12" my="4">
         <modal :is-open="isOpen" :terms="terms" :prof="activeProf" @close="close" />
-        <c-simple-grid min-child-width="240px" spacing="20px">
+        <c-simple-grid w="full" justify-content="center" spacing="10px" min-child-width="240px">
           <professor-rating
-            v-for="professor in professors"
+            v-for="professor in professors" 
             :key="professor.prof"
             :prof="professor"
             @open="open"
           />
         </c-simple-grid>
       </c-box>
-    </CBox>
+    </c-box>
   </div>
 </template>
 
@@ -95,7 +88,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      semesterCode: undefined,
+      semesterCode: 1224,
       courseName: '',
       professors: [],
       activeProf: {},
