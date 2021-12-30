@@ -25,7 +25,7 @@ app.post('/seed', (_req, res) => {
       seedRatings(),
       seedMadgradesCourses()
     ])
-      .then(() => { await seedMadgradesGrades() })
+      .then(() => { seedMadgradesGrades() })
       .then(() => { res.sendStatus(200) })
       // eslint-disable-next-line no-console
       .catch((err) => console.error(err))

@@ -6,6 +6,7 @@ module.exports = async (courseUuid) => {
             courseUuid
         })
     } catch(err) {
+        // eslint-disable-next-line no-console
         console.error(err)
         return []
     }

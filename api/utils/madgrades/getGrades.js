@@ -52,7 +52,7 @@ module.exports = async (gradesUrl) => {
     
     if (existingCourse.length > 0) {
         const gpaStatistics = existingCourse[0].courseOfferings.map((course) => getGPAStatistics(course))
-        return gpaStatistics.sort((a, b) => b[0] - a[0]).slice(0, 5)
+        return gpaStatistics.sort((a, b) => b[0] - a[0]).slice(0, 8)
     }
 
     const { data } = await axios({
@@ -69,5 +69,5 @@ module.exports = async (gradesUrl) => {
 
     const gpaStatistics = data.courseOfferings.map((course) => getGPAStatistics(course))
 
-    return gpaStatistics.sort((a, b) => b[0] - a[0]).slice(0, 5)
+    return gpaStatistics.sort((a, b) => b[0] - a[0]).slice(0, 8)
 }

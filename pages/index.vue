@@ -57,7 +57,7 @@
       <c-divider m="8"></c-divider>
 
       <c-box justify-content="bottom" mx="12" my="4">
-        <modal :is-open="isOpen" :prof="activeProf" @close="close" />
+        <modal :is-open="isOpen" :prof="activeProf" @close="close"/>
         <c-simple-grid min-child-width="240px" spacing="20px">
           <professor-rating
             v-for="professor in professors"

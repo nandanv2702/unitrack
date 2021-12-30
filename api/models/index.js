@@ -6,7 +6,7 @@ const GradesSchema = require('./Grades')
 
 // Set up default mongoose connection
 const mongoDB = process.env.NODE_ENV === 'production'
-    ? process.env.MONGODB_URL
+    ? `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_CLUSTER}.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`
     : 'mongodb://127.0.0.1/unitrack-dev'
 
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });

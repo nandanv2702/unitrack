@@ -4,6 +4,7 @@ const startCase = require('lodash.startcase')
 const wiscSearchAPI = process.env.WISC_COURSE_API
 
 module.exports = async ({ semesterCode, subjectCode, courseId }) => {
+    console.time('getprofnames')
     const { data: allSections } = await axios({
         method: 'GET',
         url: `${wiscSearchAPI}/enrollmentPackages/${semesterCode}/${subjectCode}/${courseId}`,
@@ -31,6 +32,7 @@ module.exports = async ({ semesterCode, subjectCode, courseId }) => {
      * Returns a value only if its the first iteration in the array
      */
     const profNames = rawProfessorNames.filter((v, i, a) => (v !== undefined) && a.indexOf(v) === i);
+    console.timeEnd('getprofnames')
 
     return profNames
 }
