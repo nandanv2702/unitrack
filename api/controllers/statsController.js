@@ -6,6 +6,8 @@ const getProfNames = require('../utils/getProfNames')
 const findRating = require('../utils/findRating')
 const findMadgradesCourse = require('../utils/madgrades/findCourse')
 const getGrades = require('../utils/madgrades/getGrades')
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const getAverageGPA = require('../utils/getAverageGPA')
 
 async function getCourseGrades(course) {
   console.time('getCourseGrades madgrades')
