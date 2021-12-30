@@ -1,3 +1,4 @@
+const RATING_PAGE = process.env.RATING_PAGE
 /* eslint-disable no-console */
 const { closest } = require('fastest-levenshtein')
 
@@ -43,37 +44,43 @@ async function getStats(req, res) {
       getCourseGrades(course),
     ])
 
-    const profDetails = profNames.map(async (prof) => {
+    const profDetails = profNames
+      .map(async (prof) => {
 
-      const { rating, err } = await findRating(prof)
+        const { rating, ratingId, err } = await findRating(prof)
 
-      console.log(`rating from the controller is ${rating}`)
+        console.log(`rating from the controller is ${rating}`)
 
-      if (err) {
-        return { prof, rating: 'N/A' }
-      }
-
-      // get unique professor names from madgrades API result
-      const madgradesProfNames = grades.map((semester) => {
-        return Object.keys(semester.gpaMap)
-      })
-        .flat()
-        .filter((v, i, a) => a.indexOf(v) === i);
-
-      const profGrades = grades.map((semester) => {
-        // find closest match to prof name from madgradesProfNames
-        const madgradesProf = closest(prof, madgradesProfNames)
-
-        return {
-          semesterCode: semester.semesterCode,
-          grades: semester.gpaMap[madgradesProf],
-          profName: madgradesProf
+        if (err) {
+          return { prof, rating: 'N/A' }
         }
+
+        // get unique professor names from madgrades API result
+        const madgradesProfNames = grades.map((semester) => {
+          return Object.keys(semester.gpaMap)
+        })
+          .flat()
+          .filter((v, i, a) => a.indexOf(v) === i);
+
+        const profGrades = grades.map((semester) => {
+          // find closest match to prof name from madgradesProfNames
+          const madgradesProf = closest(prof, madgradesProfNames)
+
+          return {
+            semesterCode: semester.semesterCode,
+            grades: semester.gpaMap[madgradesProf],
+            profName: madgradesProf
+          }
+        })
+
+        const ratingLink = `${RATING_PAGE}?tid=${ratingId}`
+
+        const averageGPA = getAverageGPA(profGrades)
+
+        return { prof, rating, ratingLink, averageGPA, grades: profGrades }
+
       })
-
-      return { prof, rating, grades: profGrades }
-
-    })
+      .sort((a, b) => (b.averageGPA + b.rating) - (a.averageGPA + a.rating))
 
     const result = await Promise.all(profDetails)
 
@@ -83,8 +90,6 @@ async function getStats(req, res) {
     res.send({ professors: result, grades })
   } catch (err) {
     console.error(err)
-
-    console.warn('error thrown here')
 
     res.status(400).json({ err, message: 'f' })
   }

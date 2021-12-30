@@ -14,7 +14,7 @@ module.exports = async (professor) => {
     if (profRating.length > 0) {
         console.timeEnd(`findRating for ${professor}`)
         console.log(`average for ${professor} is ${profRating[0].avgRating}`)
-        return { rating: profRating[0].avgRating }
+        return { rating: profRating[0].avgRating, ratingId: profRating[0].pkId }
     }
 
     // If it doesn't exist, polls API for rating
@@ -33,6 +33,6 @@ module.exports = async (professor) => {
 
     console.timeEnd(`findRating for ${professor}`)
 
-    return { rating: data.response.docs[0].averageratingscore_rf }
+    return { rating: data.response.docs[0].averageratingscore_rf, ratingId: data.response.docs[0].pk_id }
 }
 
