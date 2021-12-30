@@ -4,8 +4,6 @@ import axios from 'axios'
 const wiscSearchAPI = process.env.WISC_COURSE_API
 
 module.exports = async (courseName, semesterCode) => {
-    console.time('findCourse Wisc')
-
     const courseNumber = Number(courseName.split(' ').pop())
 
     const { data: matchingClasses } = await axios({
@@ -50,8 +48,6 @@ module.exports = async (courseName, semesterCode) => {
         subjectCode: match.subject?.subjectCode,
         courseDesignation: match.courseDesignation
     }
-
-    console.timeEnd('findCourse Wisc')
 
     return matchInfo
 }

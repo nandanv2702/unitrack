@@ -11,7 +11,6 @@ const getGrades = require('../utils/madgrades/getGrades')
 const getAverageGPA = require('../utils/getAverageGPA')
 
 async function getCourseGrades(course) {
-  console.time('getCourseGrades madgrades')
   const madgradesCourseInfo = await findMadgradesCourse(course)
 
   if (!madgradesCourseInfo.url) {
@@ -22,15 +21,12 @@ async function getCourseGrades(course) {
 
   const grades = await getGrades(gradesUrl)
 
-  console.timeEnd('getCourseGrades madgrades')
-
   return grades
 }
 
 
 async function getStats(req, res) {
   try {
-    console.time('getStats')
     const { course, semesterCode } = req.query
 
     const { subjectCode, courseId } = await findCourse(course, semesterCode)
@@ -83,9 +79,6 @@ async function getStats(req, res) {
       .sort((a, b) => (b.averageGPA + b.rating) - (a.averageGPA + a.rating))
 
     const result = await Promise.all(profDetails)
-
-    console.timeEnd('getStats')
-    console.log('\n')
 
     res.send({ professors: result, grades })
   } catch (err) {
