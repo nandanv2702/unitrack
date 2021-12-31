@@ -4,7 +4,7 @@
       <c-modal-header py="2"> {{ prof.prof }} </c-modal-header>
       <c-modal-close-button @click="$emit('close')" />
       <c-modal-body my="1">
-        <c-simple-grid :columns="2" :spacing="8" pt="3" text-align="center">
+        <c-simple-grid :columns="2" :spacing="8" py="3" text-align="center">
           <c-stat>
             <c-link :href="prof.ratingLink" is-external>
               <c-stat-label> Rating </c-stat-label>

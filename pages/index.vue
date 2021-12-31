@@ -8,11 +8,13 @@
       h="full"
       flex-dir="column"
     >
-      <c-box width="20px" height="20px">
-        <dark-mode-toggle />
-      </c-box>
       <c-box mt="10" justify-content="top">
-        <c-heading text-align="center" mb="4"> ⚡️ UniTrack </c-heading>
+        <c-stack is-inline w="full" justify-content="center">
+                    <c-box mx="1">
+            <dark-mode-toggle />
+          </c-box>
+          <c-heading text-align="center" mb="4"> ⚡️ UniTrack ⚡️ </c-heading>
+        </c-stack>
 
         <c-flex justify="center" direction="column" align="center" mx="4">
           <c-flex as="form">
@@ -59,10 +61,20 @@
       </c-flex>
 
       <c-box justify-content="bottom" mx="12" my="4">
-        <modal :is-open="isOpen" :terms="terms" :prof="activeProf" @close="close" />
-        <c-simple-grid w="full" justify-content="center" spacing="10px" min-child-width="240px">
+        <modal
+          :is-open="isOpen"
+          :terms="terms"
+          :prof="activeProf"
+          @close="close"
+        />
+        <c-simple-grid
+          w="full"
+          justify-content="center"
+          spacing="10px"
+          min-child-width="240px"
+        >
           <professor-rating
-            v-for="professor in professors" 
+            v-for="professor in professors"
             :key="professor.prof"
             :prof="professor"
             @open="open"
