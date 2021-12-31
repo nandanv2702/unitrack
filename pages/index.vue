@@ -65,6 +65,7 @@
           :is-open="isOpen"
           :terms="terms"
           :prof="activeProf"
+          :course-uuid="courseUuid"
           @close="close"
         />
         <c-simple-grid
@@ -106,6 +107,7 @@ export default {
       activeProf: {},
       grades: [],
       terms: {},
+      courseUuid: '',
       mainStyles: {
         dark: {
           bg: 'gray.700',
@@ -156,6 +158,7 @@ export default {
       try {
         this.professors = []
         this.grades = []
+        this.courseUuid = ''
 
         this.isLoading = true
         const { data: results } = await this.$axios(
@@ -164,6 +167,8 @@ export default {
 
         this.professors = results.professors
         this.grades = results.grades
+
+        this.courseUuid = results.courseUuid
 
         this.isLoading = false
       } catch (err) {

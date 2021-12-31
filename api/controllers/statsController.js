@@ -21,7 +21,7 @@ async function getCourseGrades(course) {
 
   const grades = await getGrades(gradesUrl)
 
-  return grades
+  return { grades, courseUuid: madgradesCourseInfo.url.split('/').pop() }
 }
 
 
@@ -35,7 +35,7 @@ async function getStats(req, res) {
       throw new Error('Invalid Course Details')
     }
 
-    const [profNames, grades] = await Promise.all([
+    const [profNames, { grades, courseUuid }] = await Promise.all([
       getProfNames({ subjectCode, courseId, semesterCode }),
       getCourseGrades(course),
     ])
@@ -73,14 +73,20 @@ async function getStats(req, res) {
 
         const averageGPA = getAverageGPA(profGrades)
 
-        return { prof, rating, ratingLink, averageGPA, grades: profGrades }
+        return { 
+          prof, 
+          rating, 
+          ratingLink,
+          averageGPA, 
+          grades: profGrades 
+        }
 
       })
       .sort((a, b) => (b.averageGPA + b.rating) - (a.averageGPA + a.rating))
 
     const result = await Promise.all(profDetails)
 
-    res.send({ professors: result, grades })
+    res.send({ professors: result, grades, courseUuid })
   } catch (err) {
     console.error(err)
 

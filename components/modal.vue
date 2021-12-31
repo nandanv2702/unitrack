@@ -14,8 +14,10 @@
             </c-link>
           </c-stat>
           <c-stat>
+            <c-link :href="`https://madgrades.com/courses/${courseUuid}`" is-external>
             <c-stat-label>Avg GPA</c-stat-label>
             <c-stat-number>{{ prof.averageGPA }}</c-stat-number>
+            </c-link>
           </c-stat>
         </c-simple-grid>
         <ModalGradesChart :terms="terms" :grades="grades" />
@@ -58,6 +60,10 @@ export default {
       type: Object,
       required: true,
     },
+    courseUuid: {
+      type: String,
+      required: true,
+    }
   },
   computed: {
     grades() {
