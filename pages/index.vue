@@ -101,7 +101,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      semesterCode: 1224,
+      semesterCode: '1224',
       courseName: '',
       professors: [],
       activeProf: {},
