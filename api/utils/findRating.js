@@ -10,7 +10,6 @@ module.exports = async (professor) => {
     const profRating = await findInternalRating(professor)
 
     if (profRating.length > 0) {
-        console.log(`average for ${professor} is ${profRating[0].avgRating}`)
         return { rating: profRating[0].avgRating, ratingId: profRating[0].pkId }
     }
 

@@ -15,12 +15,8 @@ module.exports = async () => {
             .map((x) => x._id)
             .filter((x) => !gradeIds.includes(x))
 
-        console.log(`Id list is ${idList.length} long`)
-
         for (let i = 0; i < idList.length; i++) {
             const id = idList[i]
-
-            console.log(`${id}`)
 
             const { data } = await axios({
                 method: 'GET',

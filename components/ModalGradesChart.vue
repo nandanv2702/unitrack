@@ -108,7 +108,6 @@ export default {
     },
   },
   mounted() {
-    console.log(this.data)
     const ctx = document.getElementById('grades-chart')
     Chart.register(
       LineController,

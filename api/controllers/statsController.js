@@ -45,8 +45,6 @@ async function getStats(req, res) {
 
         const { rating, ratingId, err } = await findRating(prof)
 
-        console.log(`rating from the controller is ${rating}`)
-
         if (err) {
           return { prof, rating: 'N/A' }
         }
