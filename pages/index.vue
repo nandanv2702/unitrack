@@ -10,7 +10,7 @@
     >
       <c-box mt="10" justify-content="top">
         <c-stack is-inline w="full" justify-content="center">
-                    <c-box mx="1">
+          <c-box mx="1">
             <dark-mode-toggle />
           </c-box>
           <c-heading text-align="center" mb="4"> ⚡️ UniTrack ⚡️ </c-heading>
@@ -21,7 +21,7 @@
             <c-box mr="3" rounded="md" w="48">
               <c-select v-model="semesterCode">
                 <option value="1224" selected>Spring 2022</option>
-                <option value="1222">Fall 2021</option>
+                <option value="1226">Summer 2022</option>
               </c-select>
             </c-box>
             <c-input
